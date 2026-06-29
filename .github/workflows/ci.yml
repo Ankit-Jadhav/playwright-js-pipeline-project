@@ -16,7 +16,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # Or 20, depending on your project settings
+          node-version: 22 # Or 20, depending on your project settings
 
       # Step 3: Install project dependencies (including Playwright npm package)
       - name: Install Dependencies
