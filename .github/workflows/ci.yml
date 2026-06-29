@@ -1,18 +1,40 @@
-name: Trigger Automation on Push
+name: Playwright E2E Tests
 
-# This tells GitHub to run the pipeline on every single push
 on: [push]
 
 jobs:
-  build-and-run:
+  test:
+    timeout-minutes: 60
     runs-on: ubuntu-latest
+    
     steps:
-      # Step 1: Clone the code onto GitHub's cloud runner
-      - name: Check out repo code
+      # Step 1: Clone your repository code onto the runner
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Step 2: Run the exact same Docker commands you just tested!
-      - name: Build and Run Docker Container
-        run: |
-          docker build -t automation-test .
-          docker run automation-test
+      # Step 2: Set up the Node.js runtime environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Or 20, depending on your project settings
+
+      # Step 3: Install project dependencies (including Playwright npm package)
+      - name: Install Dependencies
+        run: npm ci
+
+      # Step 4: Install system browsers required by Playwright (Chromium, Firefox, WebKit)
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # Step 5: Execute your automated test scripts
+      - name: Run Playwright Tests
+        run: npx playwright test
+
+      # Step 6: Save the html test results report so you can download it if things fail
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always() # Ensures the report saves even if a test fails
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
