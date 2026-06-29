@@ -7,10 +7,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
-    "@playwright/test": "^1.61.0",
-    "@types/node": "^26.0.0"
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^20.0.0"
   },
   "dependencies": {
     "otplib": "^13.4.1"
