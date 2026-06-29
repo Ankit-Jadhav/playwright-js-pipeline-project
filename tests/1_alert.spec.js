@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
 
 test('Handle Rediff Mail Alert Popup', async ({page}) => {
-    await page.goto('https://mail.rediff.com/cgi-bin/login.cgi', { waitUntil: 'domcontentloaded' });
+    await page.goto('https://mail.rediff.com/cgi-bin/login.cgi', { waitUntil: 'commit' });
 
     //Setup a listener for the Dialog BEFORE clicking the button
     page.on('dialog', async dialog => {
