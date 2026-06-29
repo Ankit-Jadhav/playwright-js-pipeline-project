@@ -1,0 +1,18 @@
+name: Trigger Automation on Push
+
+# This tells GitHub to run the pipeline on every single push
+on: [push]
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Clone the code onto GitHub's cloud runner
+      - name: Check out repo code
+        uses: actions/checkout@v4
+
+      # Step 2: Run the exact same Docker commands you just tested!
+      - name: Build and Run Docker Container
+        run: |
+          docker build -t automation-test .
+          docker run automation-test
