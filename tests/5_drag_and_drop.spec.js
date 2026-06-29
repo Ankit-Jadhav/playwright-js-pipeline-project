@@ -18,7 +18,7 @@ test('Handle Drag and Drop in Playwright', async ({page}) => {
     
 await expect(targetElement).toHaveText('Dropped!');
 
-await page.pause(); 
+// await page.pause(); 
 
 
 });

@@ -18,7 +18,7 @@ test('Handle Custom Combo Dropdown Case 2', async ({page}) => {
 
     expect(inputBoxValue).toContain('choice 6 2 3');
     expect(inputBoxValue).toContain('choice 6 1');
-await page.pause(); // Pause the test to see the selected values in the input box   
+// await page.pause(); // Pause the test to see the selected values in the input box   
 
 
 
