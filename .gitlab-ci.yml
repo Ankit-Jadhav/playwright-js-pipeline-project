@@ -1,5 +1,5 @@
 # Use the official Microsoft Playwright image as the base environment
-image: mcr.microsoft.com/playwright:v1.49.0-noble
+image: mcr.microsoft.com/playwright:v1.61.0-noble
 
 stages:
   - test
