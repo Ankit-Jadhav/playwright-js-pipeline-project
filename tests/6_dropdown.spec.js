@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Handle Dropdowns in Playwright', async ({page}) => {
+test('Handle Dropdowns in Playwright @smoke', async ({page}) => {
     await page.goto('https://www.orangehrm.com/30-day-free-trial');
     await page.getByRole('link', {name: 'Book a Free Demo'}).click();
 

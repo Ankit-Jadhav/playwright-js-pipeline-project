@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Handle Rediff Cookies', async ({page, context}) => {
+test('Handle Rediff Cookies @sanity', async ({page, context}) => {
 
     await page.goto('https://www.reddit.com/');
 

@@ -13,7 +13,7 @@ test.afterEach(async () => {
     }
 });
 
-test('Verify programmatic browser file download and file system validation', async ({downloadPage, page}) => 
+test('Verify programmatic browser file download and file system validation @smoke @regression @sanity', async ({downloadPage, page}) => 
 {
 
     // 💡 THE AD SHIELD: Block known advertising scripts from loading completely

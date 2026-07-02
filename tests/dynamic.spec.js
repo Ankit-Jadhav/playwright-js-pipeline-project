@@ -1,6 +1,6 @@
 const {test } = require('../fixtures/pageObjectManager');
 
-test('Handle completely dynamic IDs using resilient locators', async ({dynamicIdPage, page }) => {
+test('Handle completely dynamic IDs using resilient locators @regression', async ({dynamicIdPage, page }) => {
 
     await dynamicIdPage.navigateToDynamicIdPage();
     console.log('Clicking the button with its initial dynamic ID...');

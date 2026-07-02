@@ -1,7 +1,7 @@
 const {test, expect } = require('../fixtures/pageObjectManager');
 const { MfaLoginPage } = require('../pages/MfaLoginPage');
 
-test('E2E Challenge: Handle Secure OTP Generation and Entry', async({mfaLoginPage, page}) =>
+test('E2E Challenge: Handle Secure OTP Generation and Entry @sanity', async({mfaLoginPage, page}) =>
 {
     await mfaLoginPage.navigate();
     console.log('Entering profile credentials to trigger MFA text challenge...');

@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Handle Rediff Mail Alert Popup', async ({page}) => {
+test('Handle Rediff Mail Alert Popup @smoke @regression', async ({page}) => {
     await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
 
     //Setup a listener for the Dialog BEFORE clicking the button

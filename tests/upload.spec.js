@@ -2,7 +2,7 @@ const {test, expect} = require('../fixtures/pageObjectManager');
 const path = require('path');
 const { UploadPage } = require('../pages/UploadPage');
 
-test('Verify programmatic file upload capability', async ({uploadPage, page}) => {
+test('Verify programmatic file upload capability @smoke', async ({uploadPage, page}) => {
     
     await uploadPage.navigate();
 

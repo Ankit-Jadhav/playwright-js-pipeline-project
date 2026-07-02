@@ -2,7 +2,7 @@
 
 const {test, expect } = require('../fixtures/pageObjectManager');
 
-test('Handle long asynchronous AJAX delays smoothly', async ({ajaxPage})  => {
+test('Handle long asynchronous AJAX delays smoothly @smoke @regression @sanity', async ({ajaxPage})  => {
     //1. Navigate
     await ajaxPage.navigate();
     // 2. Click the button to fire the slow API request

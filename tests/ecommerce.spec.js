@@ -8,7 +8,7 @@ const { test, expect } = require('../fixtures/pageObjectManager');
 const { LoginPage } = require('../pages/LoginPage');
 const { InventoryPage } = require('../pages/InventoryPage');
 
-test('End to End Test: Login and Add to Cart', async ({ loginPage, inventoryPage }) => {
+test('End to End Test: Login and Add to Cart @smoke @regression', async ({ loginPage, inventoryPage }) => {
 
 
     //Note: instead of below we used the fixtures/pageObjectManager.js file to create the instances of the page classes and use them in the test

@@ -1,6 +1,6 @@
 const {test, expect} = require('@playwright/test');
 
-test('Handle Drag and Drop in Playwright', async ({page}) => {
+test('Handle Drag and Drop in Playwright @regression', async ({page}) => {
     await page.goto('https://jqueryui.com/resources/demos/droppable/default.html');
     const sourceELement = page.locator('#draggable');
     const targetElement = page.locator('#droppable');

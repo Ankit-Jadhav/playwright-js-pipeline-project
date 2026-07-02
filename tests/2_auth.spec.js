@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Handle Internet Herokuapp Alert Popup', async ({page}) => {
+test('Handle Internet Herokuapp Alert Popup @smoke @regression', async ({page}) => {
     //Pass credentials cleanly using the HTTP Credentials option
 
     await page.setExtraHTTPHeaders({

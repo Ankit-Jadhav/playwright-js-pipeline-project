@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-test('Handle Custom Combo Dropdown Case 2', async ({page}) => {
+test('Handle Custom Combo Dropdown Case 2 @regression', async ({page}) => {
     await page.goto('https://www.jqueryscript.net/demo/Drop-Down-Combo-Tree/');
     await page.locator('#justAnInputBox').click();
 
