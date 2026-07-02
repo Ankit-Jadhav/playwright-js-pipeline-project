@@ -9,6 +9,8 @@ run_playwright_tests:
   tags:
     - local  # <-- CRITICAL: This directs the job straight to your local Docker runner!
   before_script:
+    # Tell npm to ignore corporate self-signed certificate errors
+    - npm config set strict-ssl false
     - npm ci  # Clean install of your project dependencies listed in package-lock.json
   script:
     - echo "Successfully connected to local runner! Starting Playwright tests..."
