@@ -1,41 +1,51 @@
-send_teams_alert:
-  image: curlimages/curl:latest # 💡 Swapped to an image that already has curl built-in!
+send_teams_success:
+  image: curlimages/curl:latest
   stage: notify
   tags:
     - local
   rules:
-    - when: always
-  # before_script: # ❌ Removed the apk add line completely since curl is already here
+    - when: on_success # Runs ONLY if previous testing jobs passed!
   script:
-    - echo "Sending pipeline status..."
     - |
-      if [ "$CI_JOB_STATUS" == "success" ]; then
-        COLOR="00FF00"
-        TITLE="✅ Playwright Tests Passed!"
-        TEXT="**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> All automation tests executed flawlessly on the local runner."
-      else
-        COLOR="FF0000"
-        TITLE="❌ Playwright Tests Failed!"
-        TEXT="**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> Automation suite has encountered failures. Please review the GitLab CI/CD artifacts immediately."
-      fi
-      
       PAYLOAD=$(cat <<EOF
       {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
-        "themeColor": "$COLOR",
-        "summary": "Pipeline Status",
+        "themeColor": "00FF00",
+        "summary": "Pipeline Success",
         "sections": [{
-          "activityTitle": "$TITLE",
+          "activityTitle": "✅ Playwright Tests Passed!",
           "activitySubtitle": "GitLab CI/CD Notification",
-          "text": "$TEXT",
+          "text": "**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> All automation tests executed flawlessly on the local runner.",
           "markdown": true
         }]
       }
       EOF
       )
-      
-      # Added -k / --insecure flag to tell curl to bypass the corporate proxy's SSL check
-      curl -k -X POST -H 'Content-Type: application/json' \
-      -d "$PAYLOAD" \
-      $TEAMS_WEBHOOK_URL
+      curl -k -X POST -H 'Content-Type: application/json' -d "$PAYLOAD" $TEAMS_WEBHOOK_URL
+
+send_teams_failure:
+  image: curlimages/curl:latest
+  stage: notify
+  tags:
+    - local
+  rules:
+    - when: on_failure # Runs ONLY if a previous testing job broke!
+  script:
+    - |
+      PAYLOAD=$(cat <<EOF
+      {
+        "@type": "MessageCard",
+        "@context": "http://schema.org/extensions",
+        "themeColor": "FF0000",
+        "summary": "Pipeline Failure",
+        "sections": [{
+          "activityTitle": "❌ Playwright Tests Failed!",
+          "activitySubtitle": "GitLab CI/CD Notification",
+          "text": "**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> Automation suite has encountered failures. Please review the GitLab CI/CD artifacts immediately.",
+          "markdown": true
+        }]
+      }
+      EOF
+      )
+      curl -k -X POST -H 'Content-Type: application/json' -d "$PAYLOAD" $TEAMS_WEBHOOK_URL
