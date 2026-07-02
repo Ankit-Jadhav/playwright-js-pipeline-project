@@ -1,0 +1,21 @@
+install_dependencies:
+  image: mcr.microsoft.com/playwright:v1.61.0-noble
+  stage: install
+  tags:
+    - local
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+      - node_modules/
+  before_script:
+    - npm config set strict-ssl false # Corporate proxy bypass
+  script:
+    - echo "Checking dependency cache..."
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 day

@@ -1,0 +1,15 @@
+# Add a dedicated cleanup stage at the end of your pipeline
+workspace:cleanup:
+  image: alpine:latest
+  stage: cleanup
+  tags:
+    - local
+  rules:
+    # Only show this button if manually triggered via the Web UI or a Scheduled Cron
+    - if: $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  script:
+    - echo "Executing enterprise workspace and Docker disk cleanup..."
+    # Commands to clear local runner build caches if they get bloated
+    - rm -rf ./node_modules ./playwright-report ./test-results
+    - echo "Disk cleanup completed successfully."

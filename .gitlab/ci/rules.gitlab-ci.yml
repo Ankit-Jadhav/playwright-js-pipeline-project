@@ -1,0 +1,16 @@
+.rules:
+  # Rule: Execute only when a Merge Request (PR) is open
+  only_mr:
+    if: $CI_PIPELINE_SOURCE == "merge_request_event"
+
+  # Rule: Execute on QA branches or when an MR targets QA
+  qa_environment:
+    if: $CI_COMMIT_BRANCH =~ /^qa\//
+
+  # Rule: Execute on main/production branches
+  production_environment:
+    if: $CI_COMMIT_BRANCH == "main"
+
+  # Rule: Execute when triggered via GitLab's Web UI/API manually
+  manual_trigger:
+    if: $CI_PIPELINE_SOURCE == "web"

@@ -1,0 +1,39 @@
+.playwright_base:
+  image: mcr.microsoft.com/playwright:v1.61.0-noble
+  timeout: 30m # Global guardrail: Kills the job if it hangs past 30 minutes
+  interruptible: true # Auto-cancels this job if a new commit is pushed to the same PR
+  before_script:
+    - npm config set strict-ssl false
+  artifacts:
+    name: "playwright-report-$CI_COMMIT_REF_SLUG"
+    when: always
+    paths:
+      - playwright-report/
+      - test-results/
+    expire_in: 2 days # Auto-cleanup: GitLab deletes these heavy files after 2 days automatically
+
+playwright:smoke-tests:
+  extends: .playwright_base
+  stage: test
+  tags:
+    - local
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+  script:
+    - echo "Executing Merge Request Validation Smoke Suite..."
+    - npx playwright test --grep @smoke
+
+playwright:full-regression:
+  extends: .playwright_base
+  stage: test
+  tags:
+    - local
+  timeout: 1h # Overrides the default timeout for the larger regression suite
+  parallel: 2 
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+    - if: $CI_COMMIT_BRANCH == "staging"
+    - if: $CI_COMMIT_BRANCH =~ /^qa\//
+  script:
+    - echo "Executing Full Regression Suite on Env Branch..."
+    - npx playwright test --shard=$CI_NODE_INDEX/$CI_NODE_TOTAL
