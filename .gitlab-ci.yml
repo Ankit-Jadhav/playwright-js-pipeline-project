@@ -1,6 +1,7 @@
 stages:
   - install
   - test
+  - notify
   - cleanup # Added cleanup stage
 
 variables:
