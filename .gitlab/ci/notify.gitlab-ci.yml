@@ -1,26 +1,24 @@
 send_teams_alert:
-  image: alpine:latest
+  image: curlimages/curl:latest # 💡 Swapped to an image that already has curl built-in!
   stage: notify
   tags:
     - local
   rules:
-    - when: always # 💡 Ensures an alert is sent whether tests PASS or FAIL
-  before_script:
-    - apk add --no-cache curl
+    - when: always
+  # before_script: # ❌ Removed the apk add line completely since curl is already here
   script:
-    - echo "Sending pipeline status to Microsoft Teams..."
+    - echo "Sending pipeline status..."
     - |
       if [ "$CI_JOB_STATUS" == "success" ]; then
-        COLOR="00FF00" # Green
+        COLOR="00FF00"
         TITLE="✅ Playwright Tests Passed!"
-        TEXT="**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> All 15 automation tests executed flawlessly on the local runner."
+        TEXT="**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> All automation tests executed flawlessly on the local runner."
       else
-        COLOR="FF0000" # Red
+        COLOR="FF0000"
         TITLE="❌ Playwright Tests Failed!"
         TEXT="**Project:** $CI_PROJECT_NAME <br> **Branch:** \`$CI_COMMIT_BRANCH\` <br><br> Automation suite has encountered failures. Please review the GitLab CI/CD artifacts immediately."
       fi
       
-      # Construct the Microsoft Teams Connector JSON Payload
       PAYLOAD=$(cat <<EOF
       {
         "@type": "MessageCard",
@@ -37,7 +35,7 @@ send_teams_alert:
       EOF
       )
       
-      # Execute the free Teams webhook
-      curl -X POST -H 'Content-Type: application/json' \
+      # Added -k / --insecure flag to tell curl to bypass the corporate proxy's SSL check
+      curl -k -X POST -H 'Content-Type: application/json' \
       -d "$PAYLOAD" \
       $TEAMS_WEBHOOK_URL
