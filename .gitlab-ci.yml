@@ -24,3 +24,4 @@ include:
   - local: '.gitlab/ci/e2e.gitlab-ci.yml'
   - local: '.gitlab/ci/cleanup.gitlab-ci.yml' # Included the cleanup script
   - local: '.gitlab/ci/notify.gitlab-ci.yml' # Included the notification script
+  - local: '.gitlab/ci/sonar.gitlab-ci.yml'
