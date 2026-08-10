@@ -11,5 +11,5 @@ sonarqube-check:
     paths:
       - .sonar/cache
   script:
-    - sonar-scanner
-  allow_failure: true
+    - sonar-scanner -Dsonar.qualitygate.wait=true
+  allow_failure: false  # Pipeline will now fail when Quality Gate fails
