@@ -1,5 +1,5 @@
 sonarqube-check:
-  stage: code-quality
+  stage: test
   image:
     name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
